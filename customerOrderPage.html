@@ -1,0 +1,418 @@
+<template>
+    <!-- Navigation Bar -->
+    <div class="slds-context-bar">
+        <div class="slds-context-bar__primary slds-context-bar__item_divider-right align-left">
+            <div class="slds-context-bar__icon-action">
+                <lightning-icon icon-name="custom:custom5" alternative-text="App Logo" size="small"></lightning-icon>
+            </div>
+            <span class="slds-context-bar__label-action slds-context-bar__app-name">
+                <h1 class="slds-truncate" title="Grocery Shopping">Grocery shopping</h1>
+            </span>
+        </div>
+        <nav class="slds-context-bar__secondary">
+            <ul class="slds-grid">
+                <li class="slds-context-bar__item">
+                    <a href="#" class="slds-context-bar__label-action nav-link" title="Home" onclick={showHome}>🏵️ Home</a>
+                </li>
+                <!-- <li class="slds-context-bar__item">
+                    <a href="#" class="slds-context-bar__label-action nav-link" title="Categories" onclick={showCategories}>Categories</a>
+                </li> -->
+                <li class="slds-context-bar__item">
+                    <a href="#" class="slds-context-bar__label-action fruit-icon nav-link" title="Fruits" onclick={showFruits}>
+                        Fruits
+                    </a>
+                </li>
+                <li class="slds-context-bar__item">
+                    <a href="#" class="slds-context-bar__label-action vegetable-icon nav-link" title="Vegetables" onclick={showVegetables}>
+                        Vegetables
+                    </a>
+                </li>
+                <li class="slds-context-bar__item">
+                    <a href="#" class="slds-context-bar__label-action dairy-icon nav-link" title="Dairy" onclick={showDairy}>
+                        Dairy
+                    </a>
+                </li>
+                <!-- <li class="slds-context-bar__item">
+                    <a href="#" class="slds-context-bar__label-action beverage-icon nav-link" title="Beverages" onclick={showBeverages}>
+                        Beverages
+                    </a>
+                </li> -->
+                <li class="slds-context-bar__item">
+                    <a href="#" class="slds-context-bar__label-action snack-icon nav-link" title="Snacks" onclick={showSnacks}>
+                        Snacks
+                    </a>
+                </li>
+                 <li class="slds-context-bar__item">
+                    <a href="#" class="slds-context-bar__label-action nav-link" title=">>>" >
+                
+                    </a>
+                </li>
+                
+               <li class="slds-context-bar__item order-item">
+                <a class="slds-context-bar__label-action nav-link green-background" title="Orders" onclick={showOrders}>
+                    <lightning-icon icon-name="utility:fulfillment_order" alternative-text="Orders" size="small"></lightning-icon>
+                    Orders
+                </a>
+            </li>
+                
+            </ul>
+        </nav>
+    </div>
+
+
+    <!-- Fruits Page Section -->
+<template if:true={isFruits}>
+    <div class="header-with-logo" style="text-align: center; margin-top: 0.1rem;">
+        <h1 class="slds-text-title_bold" style="font-size: 1.3rem;">Welcome to Grocery World!!!</h1>
+    </div>
+    <h2 class="slds-text-title_bold" style="text-align: center; margin-top: -0.3rem;">Fruits Section</h2>
+    <div class="slds-m-around_medium" style=" margin-top: -0.3rem;">
+        <div class="item-grid" style="margin-top: -0.3rem;">
+            <!-- Use fruitCategories to show only fruits -->
+            <template for:each={fruitCategories} for:item="category">
+                <div key={category.name}>
+                    <br/>
+                    <h3 class="slds-text-title_bold category-name slds-text-color_default transparent-text" onclick={handleCategoryClick}>
+                        <!-- {category.name} -->
+                    </h3>
+                    <!-- Flexbox container for items - 2 per row -->
+                    <div class="slds-grid slds-wrap">
+                        <template for:each={category.items} for:item="item">
+                            <div key={item.name} class="slds-col slds-size_1-of-2 slds-m-bottom_small">
+                                <div class="slds-box slds-box_xx-small">
+                                    <div class="item-info slds-grid slds-grid_align-spread slds-p-around_small">
+                                        <div class="slds-col">
+                                            <img src={item.image} alt={item.name} class="item-image slds-image slds-image_circle"/>
+                                        </div>
+                                        <div class="slds-col slds-size_1-of-2 slds-text-align_left">
+                                            <lightning-input label={item.name} value={item.quantity} readonly></lightning-input>
+                                            <p>Price: {item.price} RS</p>
+                                            <!-- Emoji feedback near the quantity -->
+                                            <div class="emoji-container">
+                                                <template if:true={item.feedbackEmoji}>
+                                                    <span class="emoji-feedback">{item.feedbackEmoji}</span>
+                                                </template>
+                                            </div>
+                                        </div>
+                                        <div class="slds-col slds-text-align_right">
+                                            <lightning-button-icon icon-name="utility:add" alternative-text="Add" onclick={handleIncrement} data-item-name={item.name}></lightning-button-icon>
+                                            <lightning-button-icon icon-name="utility:delete" alternative-text="Remove" onclick={handleDecrement} data-item-name={item.name}></lightning-button-icon>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </div>
+
+    <!-- Total Amount from Other Categories -->
+    <div class="slds-m-around_medium slds-text-align_center" style=" margin-top: -0.3rem;">
+        <h3 class="slds-text-title_bold" style="margin-top: -0.3rem;">Total Amount : {totalAmount} RS</h3>
+    </div>
+
+    <!-- Place Order Button -->
+    <div class="slds-m-around_medium slds-text-align_center"  style=" margin-top: -0.3rem;" >
+        <lightning-button variant="success" label="Place Order" onclick={handlePlaceOrder}></lightning-button>
+    </div>
+</template>
+
+<!-- Vegetables Page Section -->
+<template if:true={isVegetables}>
+    <div class="header-with-logo" style="text-align: center; margin-top: 0.1rem;">
+        <h1 class="slds-text-title_bold" style="font-size: 1.3rem;">Welcome to Grocery World!!!</h1>
+    </div>
+    
+    <h2 class="slds-text-title_bold" style="text-align: center; margin-top: -0.3rem;">Vegetables Section</h2>
+    <div class="slds-m-around_medium" style="margin-top: -0.3rem;">
+        <div class="item-grid" style="margin-top: -0.3rem;">
+            <template for:each={vegetableCategories} for:item="category">
+                <div key={category.name}>
+                    <br/>
+                    <h3 class="slds-text-title_bold category-name slds-text-color_default transparent-text" onclick={handleCategoryClick}>
+                        <!-- {category.name} -->
+                    </h3>
+                    <div class="slds-grid slds-wrap">
+                        <template for:each={category.items} for:item="item">
+                            <div key={item.name} class="slds-col slds-size_1-of-2 slds-m-bottom_small">
+                                <div class="slds-box slds-box_xx-small">
+                                    <div class="item-info slds-grid slds-grid_align-spread slds-p-around_small">
+                                        <div class="slds-col">
+                                            <img src={item.image} alt={item.name} class="item-image slds-image slds-image_circle"/>
+                                        </div>
+                                        <div class="slds-col slds-size_1-of-2 slds-text-align_left">
+                                            <lightning-input label={item.name} value={item.quantity} readonly></lightning-input>
+                                            <p>Price: {item.price} RS</p>
+                                            <div class="emoji-container">
+                                                <template if:true={item.feedbackEmoji}>
+                                                    <span class="emoji-feedback">{item.feedbackEmoji}</span>
+                                                </template>
+                                            </div>
+                                        </div>
+                                        <div class="slds-col slds-text-align_right">
+                                            <lightning-button-icon icon-name="utility:add" alternative-text="Add" onclick={handleIncrement} data-item-name={item.name}></lightning-button-icon>
+                                            <lightning-button-icon icon-name="utility:delete" alternative-text="Remove" onclick={handleDecrement} data-item-name={item.name}></lightning-button-icon>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </div>
+    <div class="slds-m-around_medium slds-text-align_center" style=" margin-top: -0.3rem;">
+        <h3 class="slds-text-title_bold" style="margin-top: -0.3rem;">Total Amount : {totalAmount} RS</h3>
+    </div>
+    <div class="slds-m-around_medium slds-text-align_center" style=" margin-top: -0.3rem;">
+        <lightning-button variant="success" label="Place Order" onclick={handlePlaceOrder}></lightning-button>
+    </div>
+</template>
+
+<!-- Repeat similar structure for Dairy, Beverages, and Snacks -->
+
+<template if:true={isDairy}>
+    <div class="header-with-logo" style="text-align: center; margin-top: 0.1rem;">
+        <h1 class="slds-text-title_bold" style="font-size: 1.3rem;">Welcome to Grocery World!!!</h1>
+    </div>
+    <h2 class="slds-text-title_bold" style="text-align: center; margin-top: -0.3rem;">Dairy Section</h2>
+    <div class="slds-m-around_medium" style=" margin-top: -0.3rem;">
+        <div class="item-grid" style=" margin-top: -0.3rem;">
+            <template for:each={dairyCategories} for:item="category">
+                <div key={category.name}>
+                    <br/>
+                    <h3 class="slds-text-title_bold category-name slds-text-color_default transparent-text" onclick={handleCategoryClick}>
+                        <!-- {category.name} -->
+                    </h3>
+                    <div class="slds-grid slds-wrap">
+                        <template for:each={category.items} for:item="item">
+                            <div key={item.name} class="slds-col slds-size_1-of-2 slds-m-bottom_small">
+                                <div class="slds-box slds-box_xx-small">
+                                    <div class="item-info slds-grid slds-grid_align-spread slds-p-around_small">
+                                        <div class="slds-col">
+                                            <img src={item.image} alt={item.name} class="item-image slds-image slds-image_circle"/>
+                                        </div>
+                                        <div class="slds-col slds-size_1-of-2 slds-text-align_left">
+                                            <lightning-input label={item.name} value={item.quantity} readonly></lightning-input>
+                                            <p>Price: {item.price} RS</p>
+                                            <div class="emoji-container">
+                                                <template if:true={item.feedbackEmoji}>
+                                                    <span class="emoji-feedback">{item.feedbackEmoji}</span>
+                                                </template>
+                                            </div>
+                                        </div>
+                                        <div class="slds-col slds-text-align_right">
+                                            <lightning-button-icon icon-name="utility:add" alternative-text="Add" onclick={handleIncrement} data-item-name={item.name}></lightning-button-icon>
+                                            <lightning-button-icon icon-name="utility:delete" alternative-text="Remove" onclick={handleDecrement} data-item-name={item.name}></lightning-button-icon>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </div>
+    <div class="slds-m-around_medium slds-text-align_center" style=" margin-top: -0.3rem;">
+        <h3 class="slds-text-title_bold" style="margin-top: -0.3rem;">Total Amount : {totalAmount} RS</h3>
+    </div>
+    <div class="slds-m-around_medium slds-text-align_center" style=" margin-top: -0.3rem;">
+        <lightning-button variant="success" label="Place Order" onclick={handlePlaceOrder}></lightning-button>
+    </div>
+</template>
+
+<!-- Repeat for Beverages and Snacks -->
+
+<template if:true={isBeverages}>
+    <div class="header-with-logo" style="text-align: center; ">
+        <h1 class="slds-text-title_bold" style="font-size: 1.3rem;">Welcome to Grocery World!!!</h1>
+    </div>
+    <h2 class="slds-text-title_bold" style="text-align: center;">Beverages Section</h2>
+    <div class="slds-m-around_medium">
+        <div class="item-grid">
+            <template for:each={beverageCategories} for:item="category">
+                <div key={category.name}>
+                    <br/>
+                    <h3 class="slds-text-title_bold category-name slds-text-color_default transparent-text" onclick={handleCategoryClick}>
+                        <!-- {category.name} -->
+                    </h3>
+                    <div class="slds-grid slds-wrap">
+                        <template for:each={category.items} for:item="item">
+                            <div key={item.name} class="slds-col slds-size_1-of-2 slds-m-bottom_small">
+                                <div class="slds-box slds-box_xx-small">
+                                    <div class="item-info slds-grid slds-grid_align-spread slds-p-around_small">
+                                        <div class="slds-col">
+                                            <img src={item.image} alt={item.name} class="item-image slds-image slds-image_circle"/>
+                                        </div>
+                                        <div class="slds-col slds-size_1-of-2 slds-text-align_left">
+                                            <lightning-input label={item.name} value={item.quantity} readonly></lightning-input>
+                                            <p>Price: {item.price} RS</p>
+                                            <div class="emoji-container">
+                                                <template if:true={item.feedbackEmoji}>
+                                                    <span class="emoji-feedback">{item.feedbackEmoji}</span>
+                                                </template>
+                                            </div>
+                                        </div>
+                                        <div class="slds-col slds-text-align_right">
+                                            <lightning-button-icon icon-name="utility:add" alternative-text="Add" onclick={handleIncrement} data-item-name={item.name}></lightning-button-icon>
+                                            <lightning-button-icon icon-name="utility:delete" alternative-text="Remove" onclick={handleDecrement} data-item-name={item.name}></lightning-button-icon>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </div>
+    <div class="slds-m-around_medium slds-text-align_center" style="margin-top: -0.3rem;">
+        <h3 class="slds-text-title_bold" style="margin-top: -0.3rem;">Total Amount : {totalAmount} RS</h3>
+    </div>
+    <div class="slds-m-around_medium slds-text-align_center" style="margin-top: -0.3rem;">
+        <lightning-button variant="success" label="Place Order" onclick={handlePlaceOrder}></lightning-button>
+    </div>
+</template>
+
+<template if:true={isSnacks}>
+    <div class="header-with-logo" style="text-align: center; margin-top: 0.1rem;">
+        <h1 class="slds-text-title_bold" style="font-size: 1.3rem;">Welcome to Grocery World!!!</h1>
+    </div>
+    <h2 class="slds-text-title_bold" style="text-align: center; margin-top: -0.3rem;">Snacks Section</h2>
+    <div class="slds-m-around_medium" style="margin-top: -0.3rem;">
+        <div class="item-grid" style="margin-top: -0.3rem;">
+            <template for:each={snackCategories} for:item="category">
+                <div key={category.name}>
+                    <br/>
+                    <h3 class="slds-text-title_bold category-name slds-text-color_default transparent-text" onclick={handleCategoryClick}>
+                        <!-- {category.name} -->
+                    </h3>
+                    <div class="slds-grid slds-wrap">
+                        <template for:each={category.items} for:item="item">
+                            <div key={item.name} class="slds-col slds-size_1-of-2 slds-m-bottom_small">
+                                <div class="slds-box slds-box_xx-small">
+                                    <div class="item-info slds-grid slds-grid_align-spread slds-p-around_small">
+                                        <div class="slds-col">
+                                            <img src={item.image} alt={item.name} class="item-image slds-image slds-image_circle"/>
+                                        </div>
+                                        <div class="slds-col slds-size_1-of-2 slds-text-align_left">
+                                            <lightning-input label={item.name} value={item.quantity} readonly></lightning-input>
+                                            <p>Price: {item.price} RS</p>
+                                            <div class="emoji-container">
+                                                <template if:true={item.feedbackEmoji}>
+                                                    <span class="emoji-feedback">{item.feedbackEmoji}</span>
+                                                </template>
+                                            </div>
+                                        </div>
+                                        <div class="slds-col slds-text-align_right">
+                                            <lightning-button-icon icon-name="utility:add" alternative-text="Add" onclick={handleIncrement} data-item-name={item.name}></lightning-button-icon>
+                                            <lightning-button-icon icon-name="utility:delete" alternative-text="Remove" onclick={handleDecrement} data-item-name={item.name}></lightning-button-icon>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </div>
+    <div class="slds-m-around_medium slds-text-align_center" style="margin-top: -0.3rem;">
+        <h3 class="slds-text-title_bold" style="margin-top: -0.3rem;">Total Amount : {totalAmount} RS</h3>
+    </div>
+    <div class="slds-m-around_medium slds-text-align_center" style="margin-top: -0.3rem;">
+        <lightning-button variant="success" label="Place Order" onclick={handlePlaceOrder}></lightning-button>
+    </div>
+</template>
+
+
+   <!-- Home Section -->
+<template if:true={isHome}>
+    <lightning-card>
+
+        <div class="header-with-logo animated-background" style="text-align: center; margin-top: 0.1rem;">
+            <h1 class="slds-text-title_bold" style="font-size: 1.3rem;">Welcome to Grocery World!!!</h1>
+
+        </div> 
+    </lightning-card>
+</template>
+
+    
+    <!-- Order Confirmation Modal -->
+    <template if:true={isModalOpen}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close" alternative-text="close" size="small"></lightning-icon>
+                    </button>
+                    <h2 class="slds-text-heading_medium">Order Confirmation</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium">
+                    <p>Thank you for placing your order!</p>
+                    <ul>
+                        <template for:each={selectedItems} for:item="item">
+                            <li key={item.name}>{item.name} - Quantity: {item.quantity}</li>
+                        </template>
+                    </ul>
+                    <p>Total Amount: {totalAmount} RS</p>
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning-button variant="neutral" label="Close" onclick={closeModal}></lightning-button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+
+    <!-- Orders Section -->
+    <template if:true={isOrders}>
+        <lightning-card>
+            <div class="header-with-logo slds-grid slds-grid_align-center slds-align-middle"  style="align-items: center;">
+                <lightning-icon icon-name="custom:custom93" size="small" alternative-text="Logo" class="slds-m-right_small"></lightning-icon>
+                <h1 class="slds-text-title_bold" style="font-size: 1.3rem;">Your Orders</h1>
+            </div>
+            <template if:true={orders}>
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered orders-table">
+                    <thead>
+                        <tr>
+                            <th>Order Date</th>
+                            <th>Items</th>
+                            <th>Total Amount</th>
+                            <th>Item Count</th>
+                            <th>Delivered</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template for:each={processedOrders} for:item="order">
+                            <tr key={order.Id}>
+                                <td>{order.Order_Date__c}</td>
+                                <td>
+                                    <div class="items-grid">
+                                        <template for:each={order.processedItems} for:item="item">
+                                            <div key={item} class="slds-box slds-m-bottom_x-small">{item}</div>
+                                        </template>
+                                    </div>
+                                </td>
+                                <td>RS.{order.Total_Amount__c}</td>
+                                <td>{order.Total_Item_Count__c}</td>
+                                <td>
+                                    <lightning-input type="checkbox" checked={order.Is_Delivered__c} data-order-id={order.Id} onchange={handleDeliveredChange}></lightning-input>
+                                </td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </template>
+            <template if:false={orders}>
+                <p>No orders found.</p>
+            </template>
+        </lightning-card>
+    </template>
+  
+
+</template>

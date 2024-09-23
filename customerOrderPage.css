@@ -1,0 +1,355 @@
+/* Add padding and margin for general layout */
+.slds-m-around_medium {
+    padding: 1rem;
+    margin: 1rem;
+}
+
+/* Styling for the orders table */
+.orders-table {
+    width: 100%;
+    max-width: 800px; /* Optionally set a max-width to control width on larger screens */
+
+    border-collapse: collapse;
+    margin-bottom: 2rem;
+}
+
+.orders-table th,
+.orders-table td {
+    
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Header styling for table columns */
+.orders-table th {
+    background-color: #f4f6f9;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+/* Alternating row colors */
+.orders-table tr:nth-child(even) {
+    background-color: #f9fafb;
+}
+
+/* Display items in a grid with 2 items per row */
+.item-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.item-row {
+    width: calc(50% - 1rem); /* 2 items per row */
+    border: 1px solid #d8dde6;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+}
+
+.item-image {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    animation: rotateImage 13s linear infinite; /* 5s for slow rotation, adjust as needed */
+
+}
+
+.slds-box {
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+.item-row .item-info {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.item-row .item-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.item-row p {
+    margin: 0;
+    font-size: 1rem;
+}
+
+/* Styling for the total amount section */
+.total-amount-section {
+    text-align: right;
+    font-weight: bold;
+    font-size: 1.2rem;
+    padding: 1rem 0;
+    border-top: 2px solid #ccc;
+}
+
+/* Modal styling */
+.slds-modal__content p {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+}
+
+.slds-modal__footer {
+    justify-content: center;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 18px) {
+    .item-row {
+        width: 100%;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .item-row .item-info {
+        margin-bottom: 1rem;
+    }
+
+    .total-amount-section {
+        text-align: left;
+    }
+}
+
+
+
+
+.category-name {
+    transition: font-size 0.3s ease;
+}
+
+.category-name:hover {
+    font-size: 1.5rem; /* Adjust the size as needed */
+}
+
+.category-name:hover , .transparent-text {
+    opacity: 1; /* Adjust transparency level */
+}
+
+
+.items-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Two columns for items */
+    gap: 8px; /* Adds some space between items */
+}
+
+.items-grid > div {
+    padding: 4px 0;
+}
+
+.blue-button .slds-button {
+    background-color: blue;
+    color: white;
+}
+
+
+.transparent-text {
+    opacity: 0.6; /* Adjust transparency level */
+}
+
+
+
+/* Rotate effect for items */
+/*.item-row {
+    transition: transform 0.5s ease-in-out; /* Smooth transition effect 
+}
+
+.item-row:hover {
+    transform: rotate(360deg); /* Rotate 360 degrees on hover 
+}*/
+
+
+
+@keyframes rotateImage {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.emoji-feedback {
+    font-size: 1.5rem; /* Emoji size */
+    margin-left: 10px; /* Space between quantity and emoji */
+    display: inline-block;
+}
+
+
+.fruit-icon {
+    position: relative;
+    padding-left: 30px; /* Space for the icon */
+
+}
+
+.fruit-icon::before {
+    content: '';
+    background-image: url('/resource/GroceryImages/apple.jpg'); /* Replace with your icon URL */
+    background-size: contain; /* Adjusts size of the icon */
+    background-repeat: no-repeat;
+    position: absolute;
+    left: -3px; /* Position from the left */
+    top: 50%; /* Center vertically */
+    transform: translateY(-50%); /* Adjust for centering */
+    width: 20px; /* Adjust width as needed */
+    height: 20px; /* Adjust height as needed */
+    transition: transform 0.3s ease, width 0.3s ease, height 0.3s ease; /* Smooth transition */
+}
+.header-with-logo {
+    text-align: center; /* Center align text */
+    margin: 20px 0; /* Optional: add some vertical margin */
+}
+
+.nav-link {
+    font-weight: bold; /* Make text bold */
+    padding: 10px 20px; /* Increase top and bottom padding for more height */
+    display: inline-block; /* Ensure links respect padding */
+    position: relative; /* Required to position the ::before icon */
+}
+
+.nav-link:hover {
+    background-color: #f4f6f9; /* Optional: add hover effect */
+    border-radius: 4px; /* Optional: round corners on hover */
+}
+
+.nav-link:hover::before {
+    transform: translateY(-50%) rotate(360deg); /* Rotate icon on hover */
+   
+}
+
+.green-background {
+    background-color: rgb(90, 179, 90); /* Green background */
+    color: rgb(0, 0, 0); /* Black text color */
+    padding: 10px; /* Add padding for better spacing */
+    border-radius: 4px; /* Optional: round corners */
+}
+
+.green-background:hover {
+    background-color: rgb(46, 134, 46); /* Darker green on hover */
+}
+
+.vegetable-icon {
+    position: relative;
+    padding-left: 30px; /* Space for the icon */
+}
+
+.vegetable-icon::before {
+    content: '';
+    background-image: url('/resource/GroceryImages/broccoli.jpg'); /* Replace with your icon URL */
+    background-size: contain; /* Adjusts size of the icon */
+    background-repeat: no-repeat;
+    position: absolute;
+    left: -3px; /* Position from the left */
+    top: 60%; /* Center vertically */
+    transform: translateY(-50%); /* Adjust for centering */
+    width: 25px; /* Adjust width as needed */
+    height: 25px; /* Adjust height as needed */
+    transition: transform 0.3s ease, width 0.3s ease, height 0.3s ease; /* Smooth transition */
+
+}
+
+.dairy-icon {
+    position: relative;
+    padding-left: 30px; /* Space for the icon */
+}
+
+.dairy-icon::before {
+    content: '';
+    background-image: url('/resource/GroceryImagesss/butter.jpeg'); /* Replace with your icon URL */
+    background-size: contain; /* Adjusts size of the icon */
+    background-repeat: no-repeat;
+    position: absolute;
+    left: -3px; /* Position from the left */
+    top: 60%; /* Center vertically */
+    transform: translateY(-50%); /* Adjust for centering */
+    width: 22px; /* Adjust width as needed */
+    height: 22px; /* Adjust height as needed */
+    transition: transform 0.3s ease, width 0.3s ease, height 0.3s ease; /* Smooth transition */
+
+}
+
+.beverage-icon {
+    position: relative;
+    padding-left: 30px; /* Space for the icon */
+}
+
+.beverage-icon::before {
+    content: '';
+    background-image: url('/resource/GroceryImagesss/coffee.jpg'); /* Replace with your icon URL */
+    background-size: contain; /* Adjusts size of the icon */
+    background-repeat: no-repeat;
+    position: absolute;
+    left: -3px; /* Position from the left */
+    top: 60%; /* Center vertically */
+    transform: translateY(-50%); /* Adjust for centering */
+    width: 22px; /* Adjust width as needed */
+    height: 22px; /* Adjust height as needed */
+    transition: transform 0.3s ease, width 0.3s ease, height 0.3s ease; /* Smooth transition */
+
+}
+
+.snack-icon {
+    position: relative;
+    padding-left: 30px; /* Space for the icon */
+}
+
+.snack-icon::before {
+    content: '';
+    background-image: url('/resource/GroceryImagesss/chips.jpg'); /* Replace with your icon URL */
+    background-size: contain; /* Adjusts size of the icon */
+    background-repeat: no-repeat;
+    position: absolute;
+    left: -3px; /* Position from the left */
+    top: 60%; /* Center vertically */
+    transform: translateY(-50%); /* Adjust for centering */
+    width: 22px; /* Adjust width as needed */
+    height: 22px; /* Adjust height as needed */
+    transition: transform 0.3s ease, width 0.3s ease, height 0.3s ease; /* Smooth transition */
+
+}
+.animated-background {
+    position: relative;
+    width: 100%;
+    height: 500px;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+    animation: backgroundSlideshow 20s linear infinite;
+}
+
+@keyframes backgroundSlideshow {
+    0% {
+        background-image: url('/resource/GroceryImagesss/grapes.jpg');
+        opacity: 1;
+    }
+    20% {
+        opacity: 1;
+    }
+    25% {
+        background-image: url('/resource/GroceryImagesss/chocolate.jpg');
+        opacity: 0;
+    }
+    45% {
+        opacity: 1;
+    }
+    50% {
+        background-image: url('/resource/GroceryImagesss/cheese.jpeg');
+        opacity: 1;
+    }
+    70% {
+        opacity: 1;
+    }
+    75% {
+        background-image: url('/resource/GroceryImagesss/juice.jpg');
+        opacity: 0;
+    }
+    95% {
+        opacity: 1;
+    }
+    100% {
+        background-image: url('/resource/GroceryImagesss/spinach.jpeg');
+        opacity: 1;
+    }
+}
